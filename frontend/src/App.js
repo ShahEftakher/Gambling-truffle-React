@@ -1,3 +1,8 @@
+/**
+ * Not much accurate app
+ * but useful to understand the connection to the chain from frontend
+ */
+
 import { useState, useEffect } from 'react';
 import { getBlockchain } from './ethereum.js';
 import { Pie } from 'react-chartjs-2';

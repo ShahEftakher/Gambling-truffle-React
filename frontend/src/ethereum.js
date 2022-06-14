@@ -13,6 +13,7 @@ const getBlockchain = () =>
         // a connection to the ethereum blockchain
         // provider provides a read-only connection to the blockchain
         const provider = new ethers.providers.Web3Provider(window.ethereum);
+        console.log(provider);
         // sign the transactions
         // signer provides a way to write on the block
         // like transactions and updating the state
