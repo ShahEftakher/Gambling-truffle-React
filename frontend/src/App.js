@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { getBlockchain } from './ethereum.js';
+import getBlockchain from './ethereum.js';
 import { Pie } from 'react-chartjs-2';
 import { ethers } from 'ethers';
 const SIDE = {

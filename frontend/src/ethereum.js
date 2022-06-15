@@ -21,10 +21,12 @@ const getBlockchain = () =>
         console.log(signer);
         // signer address
         const signerAddress = await signer.getAddress();
+        console.log(signerAddress);
 
         // a JSObject abstraction to communicate with the smart contract on the blockchain
         // consider this a instance of the contract that we can interact with
         // giving us access to all the functions and state variables in the deployed smart contract
+        console.log(window.ethereum.networkVersion);
         const predictionMarket = new Contract(
           PredictionMarket.networks[window.ethereum.networkVersion].address,
           PredictionMarket.abi,
@@ -36,4 +38,4 @@ const getBlockchain = () =>
     });
   });
 
-export { getBlockchain };
+export default getBlockchain;
