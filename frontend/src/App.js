@@ -64,9 +64,10 @@ function App() {
   const placeBet = async (side, event) => {
     event.preventDefault();
     console.log(event.target.elements[0].value);
-    await predictionMarket.placeBet(side, {
-      value: ethers.utils.parseEther(event.target.elements[0].value),
-    });
+    await predictionMarket.placeBet(
+      side,
+      Number(event.target.elements[0].value)
+    );
     event.target.elements[0].value = '';
   };
 
@@ -138,8 +139,8 @@ function App() {
       <div className="row">
         <h2>Your bets</h2>
         <ul>
-          <li>Biden: {ethers.utils.formatEther(myBets[0])} ETH (wei)</li>
-          <li>Trump: {ethers.utils.formatEther(myBets[1])} ETH (wei)</li>
+          <li>Biden: {Number(myBets[0])} ESD </li>
+          <li>Trump: {Number(myBets[1])} ESD </li>
         </ul>
       </div>
 
