@@ -7,7 +7,7 @@ const SIDE = {
 
 module.exports = async function (deployer, _network, addresses) {
   const [admin, oracle, gambler1, gambler2, gambler3, gambler4, _] = addresses;
-  const tokenAddress = '0x80A11f32564b80421bE2b5893c88651Ce1963904';
+  const tokenAddress = '0xaAD6f8f6784Da9362Af957E3c59DA1a01c132Bae';
   await deployer.deploy(PredictionMarket, oracle, tokenAddress);
   const predictionMarket = await PredictionMarket.deployed();
 

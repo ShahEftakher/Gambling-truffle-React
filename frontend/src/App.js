@@ -64,15 +64,14 @@ function App() {
   const placeBet = async (side, event) => {
     event.preventDefault();
     console.log(event.target.elements[0].value);
-    await predictionMarket.placeBet(
-      side,
-      Number(event.target.elements[0].value)
-    );
+    await predictionMarket.placeBet(side, event.target.elements[0].value, {
+      from: signerAddress,
+    });
     event.target.elements[0].value = '';
   };
 
   const withdrawGain = async () => {
-    await predictionMarket.withdrawGain();
+    await predictionMarket.withdrawGain({ from: signerAddress });
   };
 
   return (
