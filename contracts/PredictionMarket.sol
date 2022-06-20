@@ -29,7 +29,7 @@ contract PredictionMarket {
 
     function placeBet(Side _side, uint256 amount) external {
         // require(electionFinished == false, "election is finished");
-        IESDToken(tokenAddress).approveTx(address(this), amount);
+        IESDToken(tokenAddress).transferTo(address(this), amount);
         bets[_side] += amount;
         betsPerGambler[msg.sender][_side] += amount;
     }
@@ -65,4 +65,6 @@ interface IESDToken {
     function approveTx(address _spender, uint256 _amount) external;
 
     function allow(address _from, address _to) external view;
+
+    function transferTo(address _to, uint256 _amount) external;
 }
