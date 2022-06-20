@@ -1,0 +1,63 @@
+1. Create a contract in ./contracts
+2. To compile the contract and store the JSONs inside frontend:  
+    - add:   contracts_build_directory: './frontend/src/contracts/',
+    in truffe-config.js
+3. Create frontend inside the porject directory.
+4. To connect forntend to the blockchain and smart contract
+    - ethers.js for provider and signer
+    - inside ethereum.js
+    window.addEventListener('load', async () => {
+      //check metamask is install it will inject a metamask object
+      if (window.ethereum) {
+        //approve from metamask pop up
+        //await from confirmation
+        await window.ethereum.enable();
+        // a connection to the ethereum blockchain
+        // provider provides a read-only connection to the blockchain
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        console.log(provider);
+        // sign the transactions
+        // signer provides a way to write on the block
+        // like transactions and updating the state
+        const signer = provider.getSigner();
+        console.log(signer);
+        // signer address
+        const signerAddress = await signer.getAddress();
+        console.log(signerAddress);
+
+        // a JSObject abstraction to communicate with the smart contract on the blockchain
+        // consider this a instance of the contract that we can interact with
+        // giving us access to all the functions and state variables in the deployed smart contract
+        console.log(window.ethereum.networkVersion);
+        const predictionMarket = new Contract(
+          PredictionMarket.networks[window.ethereum.networkVersion].address,
+          PredictionMarket.abi,
+          signer
+        );
+
+        resolve({ signerAddress, predictionMarket });
+      }
+    });
+
+
+To interact with another smart contract:
+
+While PredictionMarket contract interact with ESDToken contract,
+
+1. PredictionMarket must have a interface of ESDToken.
+2. To call a function of ESDToken from PredictionMarket:
+    - IESDToken(address of ESDToken).function(params);
+3. Only the external function of B can be called by A
+
+
+Delegation:
+
+In this application the delegation call is:
+
+User --> PredictionMarket contract --> ESDToken contract
+
+1. To preserve the sender that is the User's address in msg delegatecall is used.
+2. To use delegatecall:
+    - contractAddress.delegatecall(abi.encodeWithSignature("functionName(paramType)", params))
+    - contractAddress.delegatecall(abi.encodeWithSelector(IESDToken.functionName.selector, address(this), params))
+    

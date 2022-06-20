@@ -1,0 +1,6 @@
+let market = await PredictionMarket.deployed()
+
+await market.reportResult(1, 0, {from: "0x5feC42F64911d4cADb50098E345dCC3B301252Bd"})
+
+trump: 1
+Biden: 0
