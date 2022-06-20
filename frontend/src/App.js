@@ -16,12 +16,12 @@ function App() {
   const [predictionMarket, setPredictionMarket] = useState(undefined);
   const [myBets, setMyBets] = useState(undefined);
   const [betPrediction, setBetPrediction] = useState(undefined);
+  const [userAddress, setUserAddress] = useState(undefined);
 
   useEffect(() => {
     const init = async () => {
       const { signerAddress, predictionMarket } = await getBlockchain();
-      console.log(signerAddress);
-      console.log(predictionMarket);
+      setUserAddress(signerAddress);
 
       const bets = await Promise.all([
         predictionMarket.bets(SIDE.BIDEN),
@@ -63,15 +63,13 @@ function App() {
 
   const placeBet = async (side, event) => {
     event.preventDefault();
-    console.log(event.target.elements[0].value);
-    await predictionMarket.placeBet(side, event.target.elements[0].value, {
-      from: signerAddress,
-    });
+    console.log(userAddress);
+    await predictionMarket.placeBet(side, event.target.elements[0].value);
     event.target.elements[0].value = '';
   };
 
   const withdrawGain = async () => {
-    await predictionMarket.withdrawGain({ from: signerAddress });
+    await predictionMarket.withdrawGain({ from: userAddress });
   };
 
   return (

@@ -29,7 +29,16 @@ contract PredictionMarket {
 
     function placeBet(Side _side, uint256 amount) external {
         // require(electionFinished == false, "election is finished");
-        IESDToken(tokenAddress).transferTo(address(this), amount);
+        // IESDToken(tokenAddress).transferTo(address(this), amount);
+        // tokenAddress.delegatecall(abi.encodeWithSelector(IESDToken.transferTo.selector, address(this), amount));
+        (bool success, bytes memory data) = tokenAddress.delegatecall(
+            abi.encodeWithSignature(
+                "transfer(address, uint256)",
+                address(this),
+                amount
+            )
+        );
+        require(success == false, "Transaction failed");
         bets[_side] += amount;
         betsPerGambler[msg.sender][_side] += amount;
     }
@@ -44,7 +53,7 @@ contract PredictionMarket {
             bets[result.winner];
         betsPerGambler[msg.sender][Side.Biden] = 0;
         betsPerGambler[msg.sender][Side.Trump] = 0;
-        IESDToken(tokenAddress)._transferFrom(address(this), msg.sender, gain);
+        IESDToken(tokenAddress).transferTo(msg.sender, gain);
     }
 
     function reportResult(Side _winner, Side _loser) external {
